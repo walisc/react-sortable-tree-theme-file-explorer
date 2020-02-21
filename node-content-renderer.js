@@ -46,6 +46,7 @@ class FileThemeNodeContentRenderer extends Component {
       rowDirection,
       ...otherProps
     } = this.props;
+    const onClick = this.props.onClick 
     const nodeTitle = title || node.title;
 
     const isDraggedDescendant = draggedNode && isDescendant(draggedNode, node);
@@ -158,7 +159,7 @@ class FileThemeNodeContentRenderer extends Component {
                       </div>
                     ))}
                   </div>
-                  <div className={styles.rowLabel}>
+                  <div className={styles.rowLabel} onClick={onClick !== undefined ? ((event) => {event.stopPropagation(); onClick(event, node)}).bind(this): () => {}}>
                     <span className={styles.rowTitle}>
                       {typeof nodeTitle === 'function'
                         ? nodeTitle({
