@@ -1,0 +1,24 @@
+
+@import 'node-content-renderer';
+
+.rowWrapper {
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+}
+
+.collapseButton,
+.expandButton {
+  top: 35%;
+  &:hover::after {
+    border-top-color: gray;
+  }
+
+  &:focus {
+    outline: none;
+    /*fdsfsd*/
+    &::after {
+      filter: unset
+    }
+  }
+}
