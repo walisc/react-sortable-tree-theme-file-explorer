@@ -47,6 +47,19 @@ class FileThemeNodeContentRenderer extends Component {
       ...otherProps
     } = this.props;
     const onClick = this.props.onClick 
+    const onContextMenu = this.props.onContextMenu
+
+    const processClickEvent = (event) => {
+      if (event.type == "click" && onClick !== undefined){
+        event.stopPropagation()
+        onClick(event, node)
+      }
+      else if (event.type == "contextmenu" && onContextMenu !== undefined){
+        event.stopPropagation()
+        onContextMenu(event, node)
+      }
+    }
+
     const nodeTitle = title || node.title;
 
     const isDraggedDescendant = draggedNode && isDescendant(draggedNode, node);
@@ -159,7 +172,7 @@ class FileThemeNodeContentRenderer extends Component {
                       </div>
                     ))}
                   </div>
-                  <div className={styles.rowLabel} onClick={onClick !== undefined ? ((event) => {event.stopPropagation(); onClick(event, node)}).bind(this): () => {}}>
+                  <div className={styles.rowLabel} onClick={processClickEvent.bind(this)} onContextMenu={processClickEvent.bind(this)}>
                     <span className={styles.rowTitle}>
                       {typeof nodeTitle === 'function'
                         ? nodeTitle({
